@@ -467,10 +467,10 @@
             
             <!-- Right Wing Passive Links Cluster -->
             <nav class="navbar-links-group">
-                <a href="#">About</a>
-                <a href="#">Works</a>
-                <a href="#">Other</a>
-                <a href="#">Contact</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'works' %}">Works</a>
+                <a href="{% url 'mworks' %}">Other</a>
+                <a href="{% url 'contact' %}">Contact</a>
             </nav>
         </div>
     </header>
@@ -483,10 +483,10 @@
                 <div class="hero-canvas">
                     
                     <div class="hero-action-deck">
-                        <a href="#" class="btn-minimal-deck">About Me</a>
-                        <a href="#" class="btn-minimal-deck">View Works</a>
-                        <a href="#" class="btn-minimal-deck">Other Works</a>
-                        <a href="#" class="btn-minimal-deck">My Contacts</a>
+                        <a href="{% url 'about' %}" class="btn-minimal-deck">About Me</a>
+                        <a href="{% url 'works' %}" class="btn-minimal-deck">View Works</a>
+                        <a href="{% url 'mworks' %}" class="btn-minimal-deck">Other Works</a>
+                        <a href="{% url 'contact' %}" class="btn-minimal-deck">My Contacts</a>
                     </div>
 
                     <div class="reveal-window">
