@@ -1,3 +1,413 @@
-<html>
-    home
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince Portfolio</title>
+    
+    <!-- Bootstrap 5.3.3 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        /* ==========================================================================
+           1. MODERN MINIMALIST SETUP & COLOR PALETTE
+           ========================================================================== */
+        :root {
+            --bg-main: #f9f9fb;         /* Premium gallery off-white */
+            --panel-dark: #2d3436;      /* Deep charcoal slate for the box & nav */
+            --rndm-bx-lmnt: #4cd886;    /* Random box just because*/
+            --mega-undrln: #118b11;         /* mega underline */
+            --text-heading: #0f1111;    /* High-contrast striking black */
+            --text-muted: #7f8c8d;      /* Clean gray for secondary subheadings */
+            --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-heading);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ==========================================================================
+           2. ASYMMETRIC SPLIT-CENTER NAVIGATION DESIGN
+           ========================================================================== */
+        header {
+            width: 100%;
+            background-color: transparent;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+        }
+
+        /* The master container hosting the split grid layers */
+        .nav-inner-container {
+            max-width: 1250px;
+            margin: 0 auto;
+            position: relative; /* Anchor for absolute center alignment */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 20px;
+            height: 80px;
+        }
+
+        .nav-brand {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-heading);
+            text-decoration: none;
+            z-index: 5;
+        }
+
+        /* Pinned Dead Center Component */
+        .navbar-center-active {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%); /* Moves active item exactly into center mass */
+            z-index: 10;
+        }
+
+        .navbar-center-active a {
+            text-decoration: none;
+            color: var(--text-heading);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        /* Persistent underline for the center link */
+        .navbar-center-active a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--text-heading);
+        }
+
+        /* Pushed Off to the Right Wing */
+        .navbar-links-group {
+            display: flex;
+            gap: 25px;
+            z-index: 5;
+        }
+
+        .navbar-links-group a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.25s ease, opacity 0.25s ease;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .navbar-links-group a:hover {
+            color: var(--text-heading);
+            opacity: 0.8;
+        }
+
+        /* Dynamic expanding underline hover effect for side links */
+        .navbar-links-group a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background-color: var(--text-heading);
+            transition: width 0.25s ease;
+        }
+
+        .navbar-links-group a:hover::after {
+            width: 100%;
+        }
+
+        /* ==========================================================================
+           3. CENTERING MAIN CONTAINER
+           ========================================================================== */
+        .centered-content-wrapper {
+            max-width: 1250px; /* Constrained width pushes everything into center grid */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ==========================================================================
+           4. HERO CANVAS AND MASKED REVEAL LAYER
+           ========================================================================== */
+        .hero-canvas {
+            position: relative;
+            height: 560px;
+            margin-top: 80px;
+        }
+
+        /* The Mask Window: Clips text until it travels outside boundaries */
+        .reveal-window {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Structural Geometric Anchor Box */
+        .anchor-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 240px; 
+            height: 100%;
+            background-color: var(--rndm-bx-lmnt);
+            z-index: 1;
+            box-shadow: 25px 0 50px rgba(87, 87, 87, 0.04);
+        }
+
+        /* Animated Text Container hidden initially behind anchor box */
+        .sliding-name-container {
+            position: absolute;
+            top: 5%;
+            left: 0;
+            z-index: 2;
+            opacity: 0;
+            
+            /* High-end hardware accelerated transition */
+            animation: emergeRight 1.4s var(--transition-smooth) forwards;
+            animation-delay: 0.2s;
+        }
+
+        .sliding-name-container h1 {
+            font-size: calc(3rem + 2.2vw); /* Updated larger fluid typography */
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        }
+
+        /* ==========================================================================
+           5. CLOSER ALIGNED LABELS (Future Data Scientist)
+           ========================================================================== */
+        .role-badge {
+            position: absolute;
+            right: 40px; 
+            bottom: 60px;
+            text-align: right;
+            opacity: 0;
+            animation: fadeInRight 1s var(--transition-smooth) forwards;
+            animation-delay: 0.8s;
+            z-index: 4;
+        }
+
+        .role-badge .prefix {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .role-badge .title {
+            font-size: calc(1.3rem + 1vw);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            color: var(--panel-dark);
+        }
+
+        /* ==========================================================================
+           6. DESIGN REFINEMENTS (Adding Context Below Hero)
+           ========================================================================== */
+        .intro-statement {
+            margin-top: 40px;
+            border-top: 1px solid #e5e5e5;
+            padding-top: 30px;
+        }
+
+        .intro-statement p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* ==========================================================================
+           7. OPTIMIZED ENGINE KEYFRAMES
+           ========================================================================== */
+        @keyframes emergeRight {
+            0% {
+                transform: translateX(-1000px);
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateX(80px); /* Calibrated to fit the larger text size */
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                transform: translateX(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Tablet/Mobile Adjustments */
+        @media (max-width: 768px) {
+            .anchor-box {
+                width: 160px;
+            }
+            @keyframes emergeRight {
+                0% { transform: translateX(0px); opacity: 0; }
+                100% { transform: translateX(200px); opacity: 1; }
+            }
+            .hero-canvas {
+                height: 380px;
+            }
+            .role-badge {
+                right: 0;
+                bottom: 20px;
+            }
+        }
+        /* ==========================================================================
+           8. ACTION BUTTONS DECK (2x2 Grid Fix)
+           ========================================================================== */
+        /* ==========================================================================
+           8. ACTION BUTTONS DECK (Fixed & Squared)
+           ========================================================================== */
+        div.hero-action-deck {
+            position: absolute !important;
+            top: 50px !important;
+            left: 820px !important; /* Adjusted slightly outward to clear your oversized name */
+            z-index: 10 !important; 
+            
+            display: grid !important;
+            grid-template-columns: 110px 110px !important; /* Strict 2 columns */
+            grid-template-rows: 110px 110px !important;    /* Strict 2 rows */
+            gap: 48px !important;
+        }
+
+        /* Enforcing the beautiful sharp box styles directly */
+        div.hero-action-deck a.btn-minimal-deck {
+            all: unset !important; 
+            box-sizing: border-box !important;
+            cursor: pointer !important;
+            
+            width: 140px !important;
+            height: 140px !important;
+
+            background-color: var(--panel-dark) !important; 
+            color: #ffffff !important; 
+            border: none !important;    
+            
+            /* Typography & Centering */
+            font-size: 0.7rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            padding: 20px !important;
+            
+            transition: all 0.25s var(--transition-smooth) !important;
+        }
+
+        /* Hover Interaction State */
+        div.hero-action-deck a.btn-minimal-deck:hover {
+            color: var(--text-heading) !important;
+            border-color: var(--text-heading) !important;
+            background-color: var(--rndm-bx-lmnt) !important;
+            transform: scale(1.067) !important; /* Clean premium pop out effect */
+        }
+    
+
+    </style>
+</head>
+<body>
+
+    <!-- Asymmetric Split-Center Header Nav -->
+    <header>
+        <div class="nav-inner-container">
+            <!-- Left Wing Signature -->
+            <a href="#" class="nav-brand">P.E.U</a>
+            
+            <!-- Dead Center Anchor -->
+            <div class="navbar-center-active">
+                <a href="#">Home</a>
+            </div>
+            
+            <!-- Right Wing Passive Links Cluster -->
+            <nav class="navbar-links-group">
+                <a href="#">About</a>
+                <a href="#">Works</a>
+                <a href="#">Other</a>
+                <a href="#">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Master Layout Canvas Centered and Crowded Toward the Middle -->
+    <main class="centered-content-wrapper">
+        <div class="row">
+            <div class="col-12 position-relative">
+                
+                <<div class="hero-canvas">
+                    
+                    <div class="hero-action-deck">
+                        <a href="#" class="btn-minimal-deck">About Me</a>
+                        <a href="#" class="btn-minimal-deck">View Works</a>
+                        <a href="#" class="btn-minimal-deck">Other Items</a>
+                        <a href="#" class="btn-minimal-deck">Get In Touch</a>
+                    </div>
+
+                    <div class="reveal-window">
+                        <!-- The solid foreground structural box -->
+                        <div class="anchor-box"></div>
+                        
+                        <!-- Hidden text track that passes outward to the right -->
+                        <div class="sliding-name-container">
+                            <h1>Prince<br>Emmanuel<br>Ubando</h1>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Branding Text Block -->
+                    <div class="role-badge">
+                        <p class="prefix">Aspiring</p>
+                        <h2 class="title m-0">Data Scientist</h2>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Minimal Summary to Ground the Page Design -->
+        <div class="row intro-statement">
+            <div class="col-12">
+                <p>"Love data; it holds real evidence, not just hearsay."</p>
+            </div>
+        </div>
+    </main>
+
+    
+
+    <!-- Bootstrap 5.3.3 JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
 </html>
