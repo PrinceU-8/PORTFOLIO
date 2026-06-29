@@ -1,0 +1,475 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince Portfolio</title>
+    
+    <!-- Bootstrap 5.3.3 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        :root {
+            --bg-main: #f9f9fb;         /* Premium gallery off-white */
+            --panel-dark: #2d3436;      /* Deep charcoal slate for the box & nav */
+            --rndm-bx-lmnt: #4cd886;    /* Random box just because*/
+            --mega-undrln: #118b11;     /* mega underline */
+            --text-heading: #0f1111;    /* High-contrast striking black */
+            --text-muted: #7f8c8d;      /* Clean gray for secondary subheadings */
+            --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-heading);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 100%;
+            background-color: transparent;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+        }
+
+        .nav-inner-container {
+            max-width: 1250px;
+            margin: 0 auto;
+            position: relative; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 20px;
+            height: 80px;
+        }
+
+        .nav-brand {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-heading);
+            text-decoration: none;
+            z-index: 5;
+        }
+
+        .navbar-center-active {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%); 
+            z-index: 10;
+        }
+
+        .navbar-center-active a {
+            text-decoration: none;
+            color: var(--text-heading);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .navbar-center-active a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--text-heading);
+        }
+
+        .navbar-links-group {
+            display: flex;
+            gap: 25px;
+            z-index: 5;
+        }
+
+        .navbar-links-group a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.25s ease, opacity 0.25s ease;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .navbar-links-group a:hover {
+            color: var(--text-heading);
+            opacity: 0.8;
+        }
+
+        .navbar-links-group a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background-color: var(--text-heading);
+            transition: width 0.25s ease;
+        }
+
+        .navbar-links-group a:hover::after {
+            width: 100%;
+        }
+
+        .centered-content-wrapper {
+            max-width: 1250px; 
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .works-main-stage {
+            padding-top: 140px; 
+            padding-bottom: 100px;
+        }
+
+        .works-main-title {
+            font-size: 2.6rem;
+            font-weight: 800;
+            text-transform: capitalize;
+            color: var(--text-heading);
+            margin-bottom: 60px;
+            letter-spacing: -1px;
+        }
+
+        .work-capsule-label-wrapper {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .work-capsule-title {
+            width: 100%;
+            text-align: left;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            padding: 16px 32px;
+            border-radius: 16px 100px 100px 16px; 
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.04) 50%, rgba(0, 0, 0, 0) 100%);
+            box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.05);
+        }
+
+        .project-media-frame {
+            width: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #ffffff;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+            transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s ease;
+        }
+
+        .project-img-fluid {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 16 / 9; 
+            object-fit: cover;
+        }
+
+        .project-media-frame:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .project-sub-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-heading);
+            font-weight: 500;
+            opacity: 0.9;
+            max-width: 95%;
+        }
+
+        .project-sub-sub-text {
+            font-size: 1.01rem;
+            line-height: 1.2;
+            color: var(--text-heading);
+            font-weight: 500;
+            opacity: 0.7;
+            max-width: 95%;
+        }
+
+        .context-banner-row {
+            margin-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .context-divider-line {
+            width: 80px;
+            height: 2px;
+            background-color: rgba(0, 0, 0, 0.1);
+            margin: 0 auto 30px auto;
+        }
+
+        .context-heading-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 992px) {
+            .project-card-column {
+        margin-bottom: 40px;
+            }
+            .context-banner-row {
+        margin-top: 70px;
+            }
+        }
+
+        .portfolio-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 100px 100px 70px 0;
+            margin-top: 100px;
+        }
+
+        .footer-callout {
+            font-size: calc(2rem + 2.5vw);
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: -2px;
+            color: var(--text-heading);
+            margin-bottom: 40px;
+        }
+
+        .footer-input-group {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .footer-input-field {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+            padding: 12px 0;
+            font-size: 1rem;
+            color: var(--text-heading);
+            font-weight: 500;
+            transition: border-color 0.3s ease;
+        }
+
+        .footer-input-field:focus {
+            outline: none;
+            border-bottom-color: var(--text-heading);
+        }
+
+        .footer-input-label {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            pointer-events: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: transform 0.3s var(--transition-smooth), font-size 0.3s ease, color 0.3s ease;
+        }
+
+        .footer-input-field:focus ~ .footer-input-label,
+        .footer-input-field:not(:placeholder-shown) ~ .footer-input-label {
+            transform: translateY(-24px);
+            font-size: 0.7rem;
+            color: var(--mega-undrln);
+        }
+
+        .footer-submit-btn {
+            background-color: var(--panel-dark);
+            color: #ffffff;
+            border: none;
+            padding: 16px 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .footer-submit-btn:hover {
+            background-color: var(--rndm-bx-lmnt);
+            color: var(--text-heading);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-directory-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .footer-directory-link {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: color 0.25s ease;
+        }
+
+        .footer-directory-link:hover {
+            color: var(--mega-undrln);
+        }
+
+        .copyright-tag {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 60px;
+            font-weight: 500;
+        }
+    
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-inner-container">
+            <a href="#" class="nav-brand">PORTFOLIO NI PRINCE</a>
+            
+            <div class="navbar-center-active">
+                <a href="#">Other Workss</a>
+            </div>
+            
+            <nav class="navbar-links-group">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'works' %}">Works</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+<main class="centered-content-wrapper works-main-stage">
+    
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="works-main-title">Side Quests</h2>
+        </div>
+    </div>
+
+    <div class="row g-5 justify-content-center">
+        <div class="row context-banner-row">
+        <div class="col-12 text-center">
+            <h3 class="context-heading-text">Some other skills I have garnered, still connected to computers</h3>
+        </div>
+    </div>
+
+        <div class="col-lg-6 col-12 project-card-column">
+            <div class="work-capsule-label-wrapper">
+                <div class="work-capsule-title">Cisco Certificate</div>
+            </div>
+            
+            <div class="project-media-frame">
+                <img src="{% static 'image\CISCO.png' %}" alt="CISCO CERT" class="project-img-fluid">
+            </div>
+            
+            <div class="project-meta-details mt-4">
+                <p class="project-sub-text">June 10, 2026</p>
+                <p class="project-sub-sub-text">Obtained a Cisco Certified Network Associate (CCNA) certification.</p>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-12 project-card-column">
+            <div class="work-capsule-label-wrapper">
+                <div class="work-capsule-title">Video Editing and Animation</div>
+            </div>
+            
+            <div class="project-media-frame">
+                <img src="{% static 'image\PASSION PROJ.png' %}" alt="Passion proj" class="project-img-fluid">
+            </div>
+
+            <div class="project-meta-details mt-4"></div>
+            <p class="project-sub-text">DaVinci / Rhythm Games</p>
+                <p class="project-sub-sub-text"> I am also skilled in editing and animating.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <br> <br> <br> 
+    <div class="row context-banner-row">
+        <div class="col-12 text-center">
+            <div class="context-divider-line"></div>
+            <h3 class="context-heading-text">"Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad." — Anonymous</h3>
+        </div>
+    </div>
+
+
+
+
+<footer class="portfolio-footer" id="contact">
+            <div class="row">
+                
+                <div class="col-lg-7 col-12 pe-lg-5 mb-5 mb-lg-0">
+                    <h2 class="footer-callout">Let's work<br>together.</h2>
+                    
+                    <form action="#" method="POST" class="mt-5">
+                        <div class="footer-input-group">
+                            <input type="text" id="form_name" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <label for="form_name" class="footer-input-label">Your Name</label>
+                        </div>
+                        
+                        <div class="footer-input-group">
+                            <input type="email" id="form_email" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <label for="form_email" class="footer-input-label">Email Address</label>
+                        </div>
+
+                        <div class="footer-input-group">
+                            <input type="text" id="form_msg" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <label for="form_msg" class="footer-input-label">Your Message / Project Goal</label>
+                        </div>
+
+                        <button type="submit" class="footer-submit-btn mt-3">Send Message →</button>
+                    </form>
+                </div>
+
+                <div class="col-lg-4 offset-lg-1 col-12 pt-4">
+                    
+                    <div>
+                        <h4 class="footer-directory-title">Direct Contact</h4>
+                        <a href="mailto:your.email@example.com" class="footer-directory-link">princeubando1228@gmail.com</a>
+                    </div>
+
+                    <div>
+                        <h4 class="footer-directory-title">Social Channels</h4>
+                        <a href="https://ph.linkedin.com/learning/" target="_blank" class="footer-directory-link">LinkedIn</a>
+                        <a href="https://github.com/" target="_blank" class="footer-directory-link">GitHub</a>
+                        <a href="https://www.instagram.com/princiet_28" target="_blank" class="footer-directory-link">Instagram</a>
+                    </div>
+
+                    <div>
+                        <h4 class="footer-directory-title">Current Base</h4>
+                        <p class="footer-directory-link m-0" style="cursor: default;">Angeles City, Pampanga</p>
+                    </div>
+
+                    <p class="copyright-tag">© 2026 Prince Emmanuel Ubando. All rights reserved.</p>
+                </div>
+
+            </div>
+        </footer>
+    
+</main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
