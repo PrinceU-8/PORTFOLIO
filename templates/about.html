@@ -1,1 +1,655 @@
-hakdogui
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince Portfolio</title>
+    
+    <!-- Bootstrap 5.3.3 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        /* ==========================================================================
+           1. MODERN MINIMALIST SETUP & COLOR PALETTE
+           ========================================================================== */
+        :root {
+            --bg-main: #f9f9fb;         /* Premium gallery off-white */
+            --panel-dark: #2d3436;      /* Deep charcoal slate for the box & nav */
+            --rndm-bx-lmnt: #4cd886;    /* Random box just because*/
+            --mega-undrln: #118b11;     /* mega underline */
+            --text-heading: #0f1111;    /* High-contrast striking black */
+            --text-muted: #7f8c8d;      /* Clean gray for secondary subheadings */
+            --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-heading);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ==========================================================================
+           2. ASYMMETRIC SPLIT-CENTER NAVIGATION DESIGN
+           ========================================================================== */
+        header {
+            width: 100%;
+            background-color: transparent;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+        }
+
+        /* The master container hosting the split grid layers */
+        .nav-inner-container {
+            max-width: 1250px;
+            margin: 0 auto;
+            position: relative; /* Anchor for absolute center alignment */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 20px;
+            height: 80px;
+        }
+
+        .nav-brand {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-heading);
+            text-decoration: none;
+            z-index: 5;
+        }
+
+        /* Pinned Dead Center Component */
+        .navbar-center-active {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%); /* Moves active item exactly into center mass */
+            z-index: 10;
+        }
+
+        .navbar-center-active a {
+            text-decoration: none;
+            color: var(--text-heading);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        /* Persistent underline for the center link */
+        .navbar-center-active a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--text-heading);
+        }
+
+        /* Pushed Off to the Right Wing */
+        .navbar-links-group {
+            display: flex;
+            gap: 25px;
+            z-index: 5;
+        }
+
+        .navbar-links-group a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.25s ease, opacity 0.25s ease;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .navbar-links-group a:hover {
+            color: var(--text-heading);
+            opacity: 0.8;
+        }
+
+        /* Dynamic expanding underline hover effect for side links */
+        .navbar-links-group a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background-color: var(--text-heading);
+            transition: width 0.25s ease;
+        }
+
+        .navbar-links-group a:hover::after {
+            width: 100%;
+        }
+
+            /* ==========================================================================
+           3. CENTERING MAIN CONTAINER
+           ========================================================================== */
+        .centered-content-wrapper {
+            max-width: 1250px; /* Constrained width pushes everything into center grid */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ==========================================================================
+        ABOUT BODY LAYOUT GRID ARCHITECTURE
+        ========================================================================== */
+        .about-main-stage {
+            padding-top: 140px; /* Secure clearing window below fixed nav head rules */
+            padding-bottom: 120px;
+    }
+
+        .about-section-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 40px;
+            color: var(--text-heading);
+}
+
+        /* ==========================================================================
+        LEFT COMPONENT: GRADIENT ACCORDION CAPSULES
+        ========================================================================== */
+        .modern-timeline-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+}
+
+        .timeline-capsule-item {
+            background: transparent;
+            border: none;
+}
+
+        .capsule-trigger-btn {
+            width: 100%;
+            text-align: left;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            padding: 18px 28px;
+            border: none;
+            border-radius: 20px 100px 100px 20px; /* Perfect match for image_5bdd45.png design */
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.04) 60%, rgba(0, 0, 0, 0) 100%);
+    box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s var(--transition-smooth), background 0.3s ease;
+}
+
+        .capsule-trigger-btn:hover {
+            transform: translateX(8px);
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.06) 70%, rgba(0, 0, 0, 0) 100%);
+}
+
+        .capsule-details-drawer {
+            padding: 24px 32px;
+            margin-top: 8px;
+            margin-left: 20px;
+            background-color: rgba(0, 0, 0, 0.02);
+            border-left: 3px solid var(--panel-dark);
+            border-radius: 0 12px 12px 0;
+}
+
+        .school-title-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 6px;
+}
+
+        .school-meta-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin: 0;
+}
+
+    /* ==========================================================================
+   RIGHT COMPONENT: INDUSTRIAL NETWORK NODE TRACKS
+   ========================================================================== */
+    skill-network-playground {
+            position: relative;
+            width: 100%;
+            padding-left: 40px;
+}
+
+        .network-cluster-canvas {
+            position: relative;
+            width: 100%;
+}
+
+        .cluster-lower {
+            left: 67px;
+}
+
+        .network-svg-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+}
+
+        .network-svg-lines line {
+            stroke: var(--text-heading);
+            stroke-width: 2px;
+}
+
+        .skill-bubble-node {
+            position: absolute;
+            background-color: #000000;
+            color: #ffffff;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 2;
+    font-weight: 700;
+    transition: transform 0.3s var(--transition-smooth), background-color 0.3s ease;
+    cursor: default;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+        .skill-bubble-node:hover {
+            transform: scale(1.1);
+            background-color: var(--panel-dark);
+}
+
+        .skill-bubble-node.core-anchor {
+            border: 2px solid #ffffff;
+            outline: 2px solid #000000;
+}
+
+    /* Node Size Matrices matching layout structures */
+    .node-sm { width: 70px; height: 70px; font-size: 0.8rem; }
+    .node-md { width: 100px; height: 100px; font-size: 0.85rem; line-height: 1.2; }
+    .node-lg { width: 115px; height: 115px; font-size: 0.9rem; }
+    .node-xl { width: 135px; height: 135px; font-size: 1rem; }
+
+    /* Responsive adjustments to flatten bubble structures safely on small screens */
+    @media (max-width: 992px) {
+    .network-svg-lines { display: none; }
+    .network-cluster-canvas { height: auto !important; display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px !important; }
+    .skill-bubble-node { position: relative !important; top: auto !important; left: auto !important; width: 90px !important; height: 90px !important; font-size: 0.8rem !important; }
+}
+
+/* ==========================================================================
+   🎬 SKILL NODE FLOATING ENGINE
+   ========================================================================== */
+
+/* Keyframe for a smooth vertical drift */
+@keyframes bubbleFloat {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px); /* Drift up slightly */
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Keyframe for a slight diagonal drift for secondary nodes */
+@keyframes bubbleFloatAlt {
+    0% {
+        transform: translate(0px, 0px);
+    }
+    50% {
+        transform: translate(4px, -6px); /* Drift up and right */
+    }
+    100% {
+        transform: translate(0px, 0px);
+    }
+}
+
+/* Apply animations to the structural node rules */
+.skill-bubble-node {
+    /* Keep your existing styles here and add these animation controls: */
+    animation: bubbleFloat 6s ease-in-out infinite;
+}
+
+/* Mix it up: apply the alternate slower drift to every second node */
+.skill-bubble-node:nth-child(even) {
+    animation: bubbleFloatAlt 8s ease-in-out infinite;
+}
+
+/* 👑 CRITICAL HOVER PROTECTION: 
+   Prevents the float animation from fighting your hover scale effect */
+.skill-bubble-node:hover {
+    animation-play-state: paused; /* Pauses drifting instantly when cursor arrives */
+    transform: scale(1.1) !important;
+    background-color: var(--panel-dark);
+}
+        /* ==========================================================================
+           9. EDITORIAL CONTACT FOOTER 
+           ========================================================================== */
+        .portfolio-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 100px 100px 100px 0;
+            margin-top: 130px;
+        }
+
+        .footer-callout {
+            font-size: calc(2rem + 2.5vw);
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: -2px;
+            color: var(--text-heading);
+            margin-bottom: 40px;
+        }
+
+        /* Editorial Minimal Input Form Elements */
+        .footer-input-group {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .footer-input-field {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+            padding: 12px 0;
+            font-size: 1rem;
+            color: var(--text-heading);
+            font-weight: 500;
+            transition: border-color 0.3s ease;
+        }
+
+        .footer-input-field:focus {
+            outline: none;
+            border-bottom-color: var(--text-heading);
+        }
+
+        /* Animated Label Focus Tracking Engine */
+        .footer-input-label {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            pointer-events: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: transform 0.3s var(--transition-smooth), font-size 0.3s ease, color 0.3s ease;
+        }
+
+        /* Triggers transition shift when active */
+        .footer-input-field:focus ~ .footer-input-label,
+        .footer-input-field:not(:placeholder-shown) ~ .footer-input-label {
+            transform: translateY(-24px);
+            font-size: 0.7rem;
+            color: var(--mega-undrln);
+        }
+
+        /* Premium Submission Trigger Toggle Button */
+        .footer-submit-btn {
+            background-color: var(--panel-dark);
+            color: #ffffff;
+            border: none;
+            padding: 16px 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .footer-submit-btn:hover {
+            background-color: var(--rndm-bx-lmnt);
+            color: var(--text-heading);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Sidebar Directories Content */
+        .footer-directory-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .footer-directory-link {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: color 0.25s ease;
+        }
+
+        .footer-directory-link:hover {
+            color: var(--mega-undrln);
+        }
+
+        .copyright-tag {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 60px;
+            font-weight: 500;
+        }
+    
+
+    </style>
+</head>
+<body>
+
+    <!-- Asymmetric Split-Center Header Nav -->
+    <header>
+        <div class="nav-inner-container">
+            <!-- Left Wing Signature -->
+            <a href="#" class="nav-brand">PORTFOLIO NI PRINCE</a>
+            
+            <!-- Dead Center Anchor -->
+            <div class="navbar-center-active">
+                <a href="#">About</a>
+            </div>
+            
+            <!-- Right Wing Passive Links Cluster -->
+            <nav class="navbar-links-group">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'works' %}">Works</a>
+                <a href="{% url 'mworks' %}">Other</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    
+<!-- Inside your templates/about.html -->
+<main class="centered-content-wrapper about-main-stage">
+    <div class="row align-items-start">
+        
+        <!-- ==========================================================================
+           LEFT COLUMN: PREMIUM ACCORDION TIMELINE CAPSULES
+           ========================================================================== -->
+        <div class="col-lg-5 col-12 mb-5 mb-lg-0">
+            <h2 class="about-section-title">Educational attainment</h2>
+            
+            <div class="accordion modern-timeline-accordion" id="aboutEducationAccordion">
+                
+                <!-- Capsule 1: Senior High School -->
+                <div class="timeline-capsule-item">
+                    <button class="capsule-trigger-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSHS" aria-expanded="false" aria-controls="collapseSHS">
+                        Senior High School
+                    </button>
+                    <div id="collapseSHS" class="collapse" data-bs-parent="#aboutEducationAccordion">
+                        <div class="capsule-details-drawer">
+                            <h4 class="school-title-text">Your High School Name</h4>
+                            <p class="school-meta-text">Graduated: STEM Strand • Class of 2024</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Capsule 2: College -->
+                <div class="timeline-capsule-item">
+                    <button class="capsule-trigger-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCollege" aria-expanded="false" aria-controls="collapseCollege">
+                        College
+                    </button>
+                    <div id="collapseCollege" class="collapse" data-bs-parent="#aboutEducationAccordion">
+                        <div class="capsule-details-drawer">
+                            <h4 class="school-title-text">Your Current University / Campus</h4>
+                            <p class="school-meta-text">B.S. in Computer Science / Data Science • Expected 2028</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==========================================================================
+           RIGHT COLUMN: DYNAMIC SKILL BUBBLE NETWORK CLUSTERS
+           ========================================================================== -->
+        <div class="col-lg-7 col-12 ps-lg-5 position-relative">
+            <div class="skill-network-playground">
+        
+                <div class="network-cluster-canvas cluster-upper" style="height: 220px;">
+                    <svg class="network-svg-lines">
+                        <line id="line-html-core" />
+                        <line id="line-cpp-core" />
+                    </svg>
+            
+                    <div id="node-html" class="skill-bubble-node node-lg" style="top: 20px; left: 20px;"><span>HTML</span></div>
+                    <div id="node-core1" class="skill-bubble-node node-md core-anchor" style="top: 85px; left: 155px;"><span>Learned<br>stack</span></div>
+                    <div id="node-cpp" class="skill-bubble-node node-lg" style="top: 20px; left: 270px;"><span>C++</span></div>
+                </div>
+
+                <div class="network-cluster-canvas cluster-lower" style="height: 320px; margin-top: 30px;">
+                <svg class="network-svg-lines">
+                        <line id="line-css-core2" />
+                        <line id="line-java-core2" />
+                        <line id="line-sql-core2" />
+                        <line id="line-python-core2" />
+                </svg>
+            
+                    <div id="node-css" class="skill-bubble-node node-lg" style="top: 120px; left: 20px;"><span>CSS</span></div>
+                    <div id="node-java" class="skill-bubble-node node-sm" style="top: 40px; left: 160px;"><span>Java</span></div>
+                    <div id="node-core2" class="skill-bubble-node node-lg core-anchor" style="top: 120px; left: 140px;"><span>Learning<br>currently</span></div>
+                    <div id="node-sql" class="skill-bubble-node node-xl" style="top: 65px; left: 265px;"><span>SQL</span></div>
+                    <div id="node-python" class="skill-bubble-node node-md" style="top: 225px; left: 220px;"><span>Python</span></div>
+            </div>
+
+    </div>
+</div>
+
+    </div>
+
+    <footer class="portfolio-footer" id="contact">
+            <div class="row">
+                
+                <div class="col-lg-7 col-12 pe-lg-5 mb-5 mb-lg-0">
+                    <h2 class="footer-callout">Let's work<br>together.</h2>
+                    
+                    <form action="#" method="POST" class="mt-5">
+                        <div class="footer-input-group">
+                            <input type="text" id="form_name" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <label for="form_name" class="footer-input-label">Your Name</label>
+                        </div>
+                        
+                        <div class="footer-input-group">
+                            <input type="email" id="form_email" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <label for="form_email" class="footer-input-label">Email Address</label>
+                        </div>
+
+                        <div class="footer-input-group">
+                            <input type="text" id="form_msg" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <label for="form_msg" class="footer-input-label">Your Message / Project Goal</label>
+                        </div>
+
+                        <button type="submit" class="footer-submit-btn mt-3">Send Message →</button>
+                    </form>
+                </div>
+
+                <div class="col-lg-4 offset-lg-1 col-12 pt-4">
+                    
+                    <div>
+                        <h4 class="footer-directory-title">Direct Contact</h4>
+                        <a href="mailto:your.email@example.com" class="footer-directory-link">princeubando1228@gmail.com</a>
+                    </div>
+
+                    <div>
+                        <h4 class="footer-directory-title">Social Channels</h4>
+                        <a href="https://ph.linkedin.com/learning/" target="_blank" class="footer-directory-link">LinkedIn</a>
+                        <a href="https://github.com/" target="_blank" class="footer-directory-link">GitHub</a>
+                        <a href="https://www.instagram.com/princiet_28" target="_blank" class="footer-directory-link">Instagram</a>
+                    </div>
+
+                    <div>
+                        <h4 class="footer-directory-title">Current Base</h4>
+                        <p class="footer-directory-link m-0" style="cursor: default;">Angeles City, Pampanga</p>
+                    </div>
+
+                    <p class="copyright-tag">© 2026 Prince Emmanuel Ubando. All rights reserved.</p>
+                </div>
+
+            </div>
+        </footer>
+
+</main>
+
+
+    
+
+    <!-- Bootstrap 5.3.3 JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Dictionary mapping lines directly to their target node anchors
+            const connections = [
+                { lineId: "line-html-core", n1: "node-html", n2: "node-core1" },
+                { lineId: "line-cpp-core", n1: "node-cpp", n2: "node-core1" },
+                { lineId: "line-css-core2", n1: "node-css", n2: "node-core2" },
+        { lineId: "line-java-core2", n1: "node-java", n2: "node-core2" },
+        { lineId: "line-sql-core2", n1: "node-sql", n2: "node-core2" },
+        { lineId: "line-python-core2", n1: "node-python", n2: "node-core2" }
+    ];
+
+    function updateNetworkLines() {
+        connections.forEach(conn => {
+            const l = document.getElementById(conn.lineId);
+            const node1 = document.getElementById(conn.n1);
+            const node2 = document.getElementById(conn.n2);
+
+            if (l && node1 && node2) {
+                // Read exact offset calculations within parent cluster box spaces
+                const x1 = node1.offsetLeft + (node1.offsetWidth / 2);
+                const y1 = node1.offsetTop + (node1.offsetHeight / 2);
+                const x2 = node2.offsetLeft + (node2.offsetWidth / 2);
+                const y2 = node2.offsetTop + (node2.offsetHeight / 2);
+
+                // Instantly sync line attributes to math nodes coordinates
+                l.setAttribute("x1", x1);
+                l.setAttribute("y1", y1);
+                l.setAttribute("x2", x2);
+                l.setAttribute("y2", y2);
+            }
+        });
+
+        // Loop the calculation engine smoothly inside the browser tracking layer
+        requestAnimationFrame(updateNetworkLines);
+    }
+
+    // Initialize tracking loop
+    updateNetworkLines();
+});
+</script>
+</body>
+</html>
