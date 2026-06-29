@@ -9,9 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <style>
-        /* ==========================================================================
-           1. MODERN MINIMALIST SETUP & COLOR PALETTE
-           ========================================================================== */
         :root {
             --bg-main: #f9f9fb;         /* Premium gallery off-white */
             --panel-dark: #2d3436;      /* Deep charcoal slate for the box & nav */
@@ -29,20 +26,16 @@
             overflow-x: hidden;
         }
 
-        /* ==========================================================================
-           2. ASYMMETRIC SPLIT-CENTER NAVIGATION DESIGN
-           ========================================================================== */
         header {
             width: 100%;
             background-color: transparent;
             border-bottom: 1px solid rgba(0, 0, 0, 0.07);
         }
 
-        /* The master container hosting the split grid layers */
         .nav-inner-container {
             max-width: 1250px;
             margin: 0 auto;
-            position: relative; /* Anchor for absolute center alignment */
+            position: relative; 
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -60,12 +53,11 @@
             z-index: 5;
         }
 
-        /* Pinned Dead Center Component */
         .navbar-center-active {
             position: absolute;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%); /* Moves active item exactly into center mass */
+            transform: translate(-50%, -50%); 
             z-index: 10;
         }
 
@@ -80,7 +72,6 @@
             padding-bottom: 4px;
         }
 
-        /* Persistent underline for the center link */
         .navbar-center-active a::after {
             content: '';
             position: absolute;
@@ -91,7 +82,6 @@
             background-color: var(--text-heading);
         }
 
-        /* Pushed Off to the Right Wing */
         .navbar-links-group {
             display: flex;
             gap: 25px;
@@ -115,7 +105,6 @@
             opacity: 0.8;
         }
 
-        /* Dynamic expanding underline hover effect for side links */
         .navbar-links-group a::after {
             content: '';
             position: absolute;
@@ -131,25 +120,18 @@
             width: 100%;
         }
 
-        /* ==========================================================================
-           3. CENTERING MAIN CONTAINER
-           ========================================================================== */
         .centered-content-wrapper {
-            max-width: 1250px; /* Constrained width pushes everything into center grid */
+            max-width: 1250px; 
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* ==========================================================================
-           4. HERO CANVAS AND MASKED REVEAL LAYER
-           ========================================================================== */
         .hero-canvas {
             position: relative;
             height: 560px;
             margin-top: 80px;
         }
 
-        /* The Mask Window: Clips text until it travels outside boundaries */
         .reveal-window {
             position: absolute;
             top: 0;
@@ -159,7 +141,6 @@
             overflow: hidden;
         }
 
-        /* Structural Geometric Anchor Box */
         .anchor-box {
             position: absolute;
             top: 0;
@@ -171,7 +152,6 @@
             box-shadow: 25px 0 50px rgba(87, 87, 87, 0.04);
         }
 
-        /* Animated Text Container hidden initially behind anchor box */
         .sliding-name-container {
             position: absolute;
             top: 5%;
@@ -179,22 +159,18 @@
             z-index: 2;
             opacity: 0;
             
-            /* High-end hardware accelerated transition */
             animation: emergeRight 1.4s var(--transition-smooth) forwards;
             animation-delay: 0.2s;
         }
 
         .sliding-name-container h1 {
-            font-size: calc(3rem + 2.2vw); /* Updated larger fluid typography */
+            font-size: calc(3rem + 2.2vw); 
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: -2px;
             text-transform: uppercase;
         }
 
-        /* ==========================================================================
-           5. CLOSER ALIGNED LABELS (Future Data Scientist)
-           ========================================================================== */
         .role-badge {
             position: absolute;
             right: 40px; 
@@ -223,9 +199,6 @@
             color: var(--panel-dark);
         }
 
-        /* ==========================================================================
-           6. DESIGN REFINEMENTS (Adding Context Below Hero)
-           ========================================================================== */
         .intro-statement {
             margin-top: 40px;
             border-top: 1px solid #e5e5e5;
@@ -239,9 +212,6 @@
             line-height: 1.6;
         }
 
-        /* ==========================================================================
-           7. OPTIMIZED ENGINE KEYFRAMES
-           ========================================================================== */
         @keyframes emergeRight {
             0% {
                 transform: translateX(-1000px);
@@ -251,7 +221,7 @@
                 opacity: 0.5;
             }
             100% {
-                transform: translateX(80px); /* Calibrated to fit the larger text size */
+                transform: translateX(80px); 
                 opacity: 1;
             }
         }
@@ -267,7 +237,6 @@
             }
         }
 
-        /* Tablet/Mobile Adjustments */
         @media (max-width: 768px) {
             .anchor-box {
                 width: 160px;
@@ -284,22 +253,19 @@
                 bottom: 20px;
             }
         }
-        /* ==========================================================================
-           8. ACTION BUTTONS DECK (Fixed & Squared)
-           ========================================================================== */
+
         div.hero-action-deck {
             position: absolute !important;
             top: 50px !important;
-            left: 820px !important; /* Adjusted slightly outward to clear your oversized name */
+            left: 820px !important; 
             z-index: 10 !important; 
             
             display: grid !important;
-            grid-template-columns: 110px 110px !important; /* Strict 2 columns */
-            grid-template-rows: 110px 110px !important;    /* Strict 2 rows */
+            grid-template-columns: 110px 110px !important; 
+            grid-template-rows: 110px 110px !important;    
             gap: 48px !important;
         }
 
-        /* Enforcing the beautiful sharp box styles directly */
         div.hero-action-deck a.btn-minimal-deck {
             all: unset !important; 
             box-sizing: border-box !important;
@@ -312,7 +278,6 @@
             color: #ffffff !important; 
             border: none !important;    
             
-            /* Typography & Centering */
             font-size: 0.7rem !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
@@ -326,7 +291,6 @@
             transition: all 0.25s var(--transition-smooth) !important;
         }
 
-        /* Hover Interaction State */
         div.hero-action-deck a.btn-minimal-deck:hover {
             color: var(--text-heading) !important;
             border-color: var(--text-heading) !important;
@@ -334,9 +298,6 @@
             transform: scale(1.067) !important; /* Clean premium pop out effect */
         }
 
-        /* ==========================================================================
-           9. EDITORIAL CONTACT FOOTER 
-           ========================================================================== */
         .portfolio-footer {
             border-top: 1px solid rgba(0, 0, 0, 0.08);
             padding: 100px 100px 200px 0;
@@ -353,7 +314,6 @@
             margin-bottom: 40px;
         }
 
-        /* Editorial Minimal Input Form Elements */
         .footer-input-group {
             position: relative;
             margin-bottom: 35px;
@@ -376,7 +336,6 @@
             border-bottom-color: var(--text-heading);
         }
 
-        /* Animated Label Focus Tracking Engine */
         .footer-input-label {
             position: absolute;
             left: 0;
@@ -390,7 +349,6 @@
             transition: transform 0.3s var(--transition-smooth), font-size 0.3s ease, color 0.3s ease;
         }
 
-        /* Triggers transition shift when active */
         .footer-input-field:focus ~ .footer-input-label,
         .footer-input-field:not(:placeholder-shown) ~ .footer-input-label {
             transform: translateY(-24px);
@@ -398,7 +356,6 @@
             color: var(--mega-undrln);
         }
 
-        /* Premium Submission Trigger Toggle Button */
         .footer-submit-btn {
             background-color: var(--panel-dark);
             color: #ffffff;
@@ -418,7 +375,6 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
         }
 
-        /* Sidebar Directories Content */
         .footer-directory-title {
             font-size: 0.75rem;
             font-weight: 700;
@@ -454,13 +410,10 @@
 </head>
 <body>
 
-    <!-- Asymmetric Split-Center Header Nav -->
     <header>
         <div class="nav-inner-container">
-            <!-- Left Wing Signature -->
             <a href="#" class="nav-brand">PORTFOLIO NI PRINCE</a>
             
-            <!-- Dead Center Anchor -->
             <div class="navbar-center-active">
                 <a href="#">Home</a>
             </div>
@@ -475,7 +428,6 @@
         </div>
     </header>
 
-    <!-- Master Layout Canvas Centered and Crowded Toward the Middle -->
     <main class="centered-content-wrapper">
         <div class="row">
             <div class="col-12 position-relative">
@@ -490,16 +442,13 @@
                     </div>
 
                     <div class="reveal-window">
-                        <!-- The solid foreground structural box -->
                         <div class="anchor-box"></div>
                         
-                        <!-- Hidden text track that passes outward to the right -->
                         <div class="sliding-name-container">
                             <h1>Prince<br>Emmanuel<br>Ubando</h1>
                         </div>
                     </div>
 
-                    <!-- Right Side Branding Text Block -->
                     <div class="role-badge">
                         <p class="prefix">Aspiring</p>
                         <h2 class="title m-0">Data Scientist</h2>
@@ -509,7 +458,6 @@
             </div>
         </div>
 
-        <!-- Minimal Summary to Ground the Page Design -->
         <div class="row intro-statement">
             <div class="col-12">
                 <p>"Love data; it holds real evidence, not just hearsay."</p>
@@ -569,9 +517,6 @@
 
     </main>
 
-    
-
-    <!-- Bootstrap 5.3.3 JS Bundle CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
