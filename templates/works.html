@@ -370,52 +370,45 @@
     <div class="row g-5 justify-content-center">
         <div class="row context-banner-row">
         <div class="col-12 text-center">
-            <h3 class="context-heading-text">Some of the projects I have done adjacent to data analyzing</h3>
+            <h3 class="context-heading-text">Some of the projects I have done adjacent to data analyzing and programming</h3>
         </div>
     </div>
 
+
+    <div class="row g-5 justify-content-center">
+
+        {% for project in ProjDATA %}
         <div class="col-lg-6 col-12 project-card-column">
             <div class="work-capsule-label-wrapper">
-                <div class="work-capsule-title">Student preference in mode of shopping physically or online</div>
+                <div class="work-capsule-title">{{ project.project_name }}</div>
             </div>
             
             <div class="project-media-frame">
-                <img src="{% static 'image/AISLES TO APP.png' %}" alt="Grade 12 research" class="project-img-fluid">
+                <img src="{% static project.image %}" alt="{{ project.project_name }}" class="project-img-fluid">
             </div>
             
             <div class="project-meta-details mt-4">
-                <p class="project-sub-text">Grade 12 research</p>
-                <p class="project-sub-sub-text">The project focused on the reasons of why a number of students would prefer to choose a mode of shopping to another. 
-                    The research utilized servet questions that were needed to be analyzed. This was done by me leading the analyzing, 
-                    using excel sheets where I processed a hundered responses automatically by means of formulas.</p>
+                <p class="project-sub-text">{{ project.description }}</p>
+                <p class="project-sub-sub-text">{{ project.tech_stack }}</p>
+                <a href="{{ project.link }}" target="_blank" class="project-sub-sub-text">LINK</a>
             </div>
         </div>
 
-        <div class="col-lg-6 col-12 project-card-column">
-            <div class="work-capsule-label-wrapper">
-                <div class="work-capsule-title">Correlation of students phone usage to their physical and mental health</div>
-            </div>
-            
-            <div class="project-media-frame">
-                <img src="{% static 'image\physical and mental.png' %}" alt="Grade 12 research" class="project-img-fluid">
-            </div>
-
-            <div class="project-meta-details mt-4"></div>
-            <p class="project-sub-text">Grade 11 research</p>
-                <p class="project-sub-sub-text">A project about correlation that was done as a requirement for a data analysis subject. where Excel sheets are also utilized
-                    using many of its automating capabilities to easily analyze data, to which I have created the formulas myself, and even charts connected 
-                    to the data presented.
-                </p>
-            </div>
-        </div>
-
+    {% empty %}
+    <div class="col-12 text-center text-danger fw-bold py-5">
+        Backend Debug Alert: Django connected to the database, but your ProjDATA table has 0 rows in it!
     </div>
 
+        {% endfor %}
+    </div>
+
+            
     <br> <br> <br> 
     <div class="row context-banner-row">
         <div class="col-12 text-center">
             <div class="context-divider-line"></div>
             <h3 class="context-heading-text">More projects coming soon...</h3>
+            </div>
         </div>
     </div>
 
