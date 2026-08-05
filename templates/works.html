@@ -384,8 +384,7 @@
             </div>
             
             <div class="project-media-frame">
-                <img src="{% static 'image/' %}{{ project.project_name }}" alt="{{ project.project_name }}" class="project-img-fluid">
-            </div>
+            <img src="{% static 'image/' %}{{ project.project_name }}.png" alt="{{ project.project_name }}" class="project-img-fluid">            </div>
             
             <div class="project-meta-details mt-4">
                 <p class="project-sub-text">{{ project.description }}</p>
@@ -415,20 +414,19 @@
 
         <div class="row g-5 justify-content-center">
 
-        {% for project in ProjDATA %}
+        {% for otherproject in OtherProjDATA %}
         <div class="col-lg-6 col-12 project-card-column">
             <div class="work-capsule-label-wrapper">
-                <div class="work-capsule-title">{{ project.project_name }}</div>
+                <div class="work-capsule-title">{{ otherproject.project_name }}</div>
             </div>
             
             <div class="project-media-frame">
-                <img src="{% static 'image/' %}{{ project.project_name }}" alt="{{ project.project_name }}" class="project-img-fluid">
-            </div>
+            <img src="{% static 'image/' %}{{ otherproject.project_name }}.png" alt="{{ otherproject.project_name }}" class="project-img-fluid">            </div>
             
             <div class="project-meta-details mt-4">
-                <p class="project-sub-text">{{ project.description }}</p>
-                <p class="project-sub-sub-text">{{ project.tech_stack }}</p>
-                <a href="{{ project.link }}" target="_blank" class="project-sub-sub-text">LINK</a>
+                <p class="project-sub-text">{{ otherproject.description }}</p>
+                <p class="project-sub-sub-text">{{ otherproject.tech_stack }}</p>
+                <a href="{{ otherproject.link }}" target="_blank" class="project-sub-sub-text">LINK</a>
             </div>
         </div>
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import ProjDATA, PersonDATA
+from .models import OtherProjDATA, ProjDATA, PersonDATA
 
 def about(request):
     personal_info = PersonDATA.objects.first()
@@ -12,3 +12,11 @@ def project_list(request):
 def project_detail(request, project_id):
     project = get_object_or_404(ProjDATA, pk=project_id)
     return render(request, 'project_detail.html', {'project': project})
+
+def project_list(request):
+    otherprojects = OtherProjDATA.objects.all()
+    return render(request, 'works.html', {'OtherProjDATA': otherprojects})
+
+def project_detail(request, project_id):
+    otherproject = get_object_or_404(OtherProjDATA, pk=project_id)
+    return render(request, 'project_detail.html', {'otherproject': otherproject})
