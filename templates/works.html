@@ -384,7 +384,7 @@
             </div>
             
             <div class="project-media-frame">
-                <img src="{% static project.image %}" alt="{{ project.project_name }}" class="project-img-fluid">
+                <img src="{% static 'image/' %}{{ project.project_name }}" alt="{{ project.project_name }}" class="project-img-fluid">
             </div>
             
             <div class="project-meta-details mt-4">
@@ -402,6 +402,7 @@
         {% endfor %}
     </div>
 
+    
             
     <br> <br> <br> 
     <div class="row context-banner-row">
@@ -411,6 +412,42 @@
             </div>
         </div>
     </div>
+
+        <div class="row g-5 justify-content-center">
+
+        {% for project in ProjDATA %}
+        <div class="col-lg-6 col-12 project-card-column">
+            <div class="work-capsule-label-wrapper">
+                <div class="work-capsule-title">{{ project.project_name }}</div>
+            </div>
+            
+            <div class="project-media-frame">
+                <img src="{% static 'image/' %}{{ project.project_name }}" alt="{{ project.project_name }}" class="project-img-fluid">
+            </div>
+            
+            <div class="project-meta-details mt-4">
+                <p class="project-sub-text">{{ project.description }}</p>
+                <p class="project-sub-sub-text">{{ project.tech_stack }}</p>
+                <a href="{{ project.link }}" target="_blank" class="project-sub-sub-text">LINK</a>
+            </div>
+        </div>
+
+    {% empty %}
+    <div class="col-12 text-center text-danger fw-bold py-5">
+        Backend Debug Alert: Django connected to the database, but your ProjDATA table has 0 rows in it!
+    </div>
+
+        {% endfor %}
+    </div>
+
+    <br> <br> <br> 
+    <div class="row context-banner-row">
+        <div class="col-12 text-center">
+            <div class="context-divider-line"></div>
+            <h3 class="context-heading-text">"Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad." — Anonymous</h3>
+        </div>
+    </div>
+
 
 
 
