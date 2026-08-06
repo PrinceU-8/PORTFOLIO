@@ -336,22 +336,20 @@
     
 
     </style>
-</head>
 
 <body>
-
     <header>
         <div class="nav-inner-container">
             <a href="#" class="nav-brand">PORTFOLIO NI PRINCE</a>
             
             <div class="navbar-center-active">
-                <a href="#">Other Workss</a>
+                <a href="#">References</a>
             </div>
             
             <nav class="navbar-links-group">
-                <a href="{% url 'home' %}">Home</a>
                 <a href="{% url 'about' %}">About</a>
                 <a href="{% url 'works' %}">Works</a>
+                <a href="{% url 'testimony' %}">Testimonials</a>
                 <a href="#contact">Contact</a>
             </nav>
         </div>
@@ -359,59 +357,83 @@
 
 <main class="centered-content-wrapper works-main-stage">
     
-    <div class="row mb-5">
-        <div class="col-12 text-center">
-            <h2 class="works-main-title">Side Quests</h2>
-        </div>
-    </div>
-
-    <div class="row g-5 justify-content-center">
-        <div class="row context-banner-row">
-        <div class="col-12 text-center">
-            <h3 class="context-heading-text">Some other skills I have garnered, still connected to computers</h3>
-        </div>
-    </div>
-
-        <div class="col-lg-6 col-12 project-card-column">
-            <div class="work-capsule-label-wrapper">
-                <div class="work-capsule-title">Cisco Certificate</div>
+<div class="modal fade text-dark" id="addTestimonialModal" tabindex="-1" aria-labelledby="addTestimonialModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="addTestimonialModalLabel">Add New Testimonial</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
-            <div class="project-media-frame">
-                <img src="{% static 'image\CISCO.png' %}" alt="CISCO CERT" class="project-img-fluid">
-            </div>
-            
-            <div class="project-meta-details mt-4">
-                <p class="project-sub-text">June 10, 2026</p>
-                <p class="project-sub-sub-text">Obtained a Cisco Certified Network Associate (CCNA) certification.</p>
-            </div>
+            <form action="{% url 'add_testimonial' %}" method="POST">
+                <div class="modal-body text-start">
+                    {% csrf_token %}
+                    {{ testimony_form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Project</button>
+                </div>
+            </form>
         </div>
-
-        <div class="col-lg-6 col-12 project-card-column">
-            <div class="work-capsule-label-wrapper">
-                <div class="work-capsule-title">Video Editing and Animation</div>
-            </div>
-            
-            <div class="project-media-frame">
-                <img src="{% static 'image\PASSION PROJ.png' %}" alt="Passion proj" class="project-img-fluid">
-            </div>
-
-            <div class="project-meta-details mt-4"></div>
-            <p class="project-sub-text">DaVinci / Rhythm Games</p>
-                <p class="project-sub-sub-text"> I am also skilled in editing and animating.
-                </p>
-            </div>
-        </div>
-
     </div>
+</div>
+
+
+<div class="row mb-4 text-center">
+    <div class="col-12">
+        <h2 class="works-main-title mb-7">Testimonies</h2>
+        
+        <h3 class="context-heading-text mb-3">Testimonies from people who have worked with me</h3>
+        <br><br><br>
+        <button type="button" class="btn btn-primary btn-sm px-3 py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#addTestimonialModal">
+            + Add Testimonial
+        </button>
+    </div>
+</div>
+
+<div class="row g-4 justify-content-center">
+            {% for testimony in testimonies %}
+                <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
+                    <div class="project-card-column w-100">
+                    <div>
+                        <div class="work-capsule-label-wrapper">
+                            <div class="work-capsule-title">{{ testimony.full_name }}</div>
+                        </div>
+                        <div class="project-meta-details mt-3">
+                            <p class="project-sub-text">✉ {{ testimony.email }}</p>
+                            <small class="text-muted fw-semibold">{{ testimony.created_at|date:"M j, Y" }}</small>
+                            <p class="project-sub-sub-text">"{{ testimony.content|truncatewords:15 }}"</p>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="mt-4 pt-3 border-top">
+                        <a href="{% url 'testimonialDATA_detail' testimony.id %}" class="btn btn-sm btn-outline-dark fw-bold">
+                            Read Details →
+                        </a>
+                    </div>
+                </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center text-muted py-5 fs-5">
+                    No testimonies available yet. Click <strong>+ Add Testimonial</strong> to submit the first one!
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+        </div>
+        
+
 
     <br> <br> <br> 
     <div class="row context-banner-row">
         <div class="col-12 text-center">
             <div class="context-divider-line"></div>
-            <h3 class="context-heading-text">"Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad." — Anonymous</h3>
+            <h3 class="context-heading-text">"Do you have any character references?" "Please" — Thomas Sander's mom (2015)</h3>
         </div>
     </div>
+
 
 
 
