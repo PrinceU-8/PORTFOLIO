@@ -11,10 +11,13 @@
 
     <style>
         :root {
-            --bg-main: #f9f9fb;
-            --panel-dark: #2d3436;
-            --text-heading: #0f1111;
-            --text-muted: #7f8c8d;
+            --bg-main: #f9f9fb;         /* Premium gallery off-white */
+            --panel-dark: #2d3436;      /* Deep charcoal slate for the box & nav */
+            --rndm-bx-lmnt: #4cd886;    /* Random box just because*/
+            --mega-undrln: #118b11;     /* mega underline */
+            --text-heading: #0f1111;    /* High-contrast striking black */
+            --text-muted: #7f8c8d;      /* Clean gray for secondary subheadings */
+            --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         body {
@@ -23,7 +26,6 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
 
         header {
             width: 100%;
@@ -120,117 +122,189 @@
         }
 
         .centered-content-wrapper {
-            max-width: 1250px; /* Constrained width pushes everything into center grid */
+            max-width: 1250px; 
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        .works-main-stage {
-            padding-top: 140px; /* Secure clear padding space beneath sticky nav header elements */
-            padding-bottom: 100px;
+        .hero-canvas {
+            position: relative;
+            height: 560px;
+            margin-top: 80px;
         }
 
-        .works-main-title {
-            font-size: 2.6rem;
-            font-weight: 800;
-            text-transform: capitalize;
-            color: var(--text-heading);
-            margin-bottom: 60px;
-            letter-spacing: -1px;
-        }
-
-
-        .work-capsule-label-wrapper {
+        .reveal-window {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            margin-bottom: 24px;
-        }
-
-        .work-capsule-title {
-            width: 100%;
-            text-align: left;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-heading);
-            padding: 16px 32px;
-            border-radius: 16px 100px 100px 16px; 
-            background: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.04) 50%, rgba(0, 0, 0, 0) 100%);
-            box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.05);
-        }
-
-        .project-media-frame {
-            width: 100%;
-            border-radius: 4px;
+            height: 100%;
             overflow: hidden;
-            background-color: #ffffff;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
-            transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s ease;
         }
 
-        .project-img-fluid {
-            width: 100%;
-            height: auto;
-            display: block;
-            aspect-ratio: 16 / 9; 
-            object-fit: cover;
+        .anchor-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 240px; 
+            height: 100%;
+            background-color: var(--rndm-bx-lmnt);
+            z-index: 1;
+            box-shadow: 25px 0 50px rgba(87, 87, 87, 0.04);
         }
 
-        .project-media-frame:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+        .sliding-name-container {
+            position: absolute;
+            top: 5%;
+            left: 0;
+            z-index: 2;
+            opacity: 0;
+            
+            animation: emergeRight 1.4s var(--transition-smooth) forwards;
+            animation-delay: 0.2s;
         }
 
-        .project-sub-text {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: var(--text-heading);
-            font-weight: 500;
-            opacity: 0.9;
-            max-width: 95%;
+        .sliding-name-container h1 {
+            font-size: calc(3rem + 2.2vw); 
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            text-transform: uppercase;
         }
 
-        .project-sub-sub-text {
-            font-size: 1.01rem;
-            line-height: 1.2;
-            color: var(--text-heading);
-            font-weight: 500;
-            opacity: 0.7;
-            max-width: 95%;
+        .role-badge {
+            position: absolute;
+            right: 40px; 
+            bottom: 60px;
+            text-align: right;
+            opacity: 0;
+            animation: fadeInRight 1s var(--transition-smooth) forwards;
+            animation-delay: 0.8s;
+            z-index: 4;
         }
 
-        .context-banner-row {
-            margin-top: 20px;
-            padding-bottom: 40px;
-        }
-
-        .context-divider-line {
-            width: 80px;
-            height: 2px;
-            background-color: rgba(0, 0, 0, 0.1);
-            margin: 0 auto 30px auto;
-        }
-
-        .context-heading-text {
-            font-size: 1.3rem;
-            font-weight: 600;
-            font-style: italic;
+        .role-badge .prefix {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
             color: var(--text-muted);
-            letter-spacing: 0.5px;
+            margin-bottom: 5px;
         }
 
-        @media (max-width: 992px) {
-            .project-card-column {
-        margin-bottom: 40px;
+        .role-badge .title {
+            font-size: calc(1.3rem + 1vw);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            color: var(--panel-dark);
+        }
+
+        .intro-statement {
+            margin-top: 40px;
+            border-top: 1px solid #e5e5e5;
+            padding-top: 30px;
+        }
+
+        .intro-statement p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+
+        @keyframes emergeRight {
+            0% {
+                transform: translateX(-1000px);
+                opacity: 0;
             }
-            .context-banner-row {
-        margin-top: 70px;
+            30% {
+                opacity: 0.5;
             }
+            100% {
+                transform: translateX(80px); 
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                transform: translateX(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .anchor-box {
+                width: 160px;
+            }
+            @keyframes emergeRight {
+                0% { transform: translateX(0px); opacity: 0; }
+                100% { transform: translateX(200px); opacity: 1; }
+            }
+            .hero-canvas {
+                height: 380px;
+            }
+            .role-badge {
+                right: 0;
+                bottom: 20px;
+            }
+        }
+
+        div.hero-action-deck {
+            position: absolute !important;
+            top: 50px !important;
+            left: 820px !important; 
+            z-index: 10 !important; 
+            
+            display: grid !important;
+            grid-template-columns: 110px 110px !important; 
+            grid-template-rows: 110px 110px !important;    
+            gap: 48px !important;
+        }
+
+        div.hero-action-deck a.btn-minimal-deck {
+            all: unset !important; 
+            box-sizing: border-box !important;
+            cursor: pointer !important;
+            
+            width: 140px !important;
+            height: 140px !important;
+
+            background-color: var(--panel-dark) !important; 
+            color: #ffffff !important; 
+            border: none !important;    
+            
+            font-size: 0.7rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            padding: 20px !important;
+            
+            transition: all 0.25s var(--transition-smooth) !important;
+        }
+
+        div.hero-action-deck a.btn-minimal-deck:hover {
+            color: var(--text-heading) !important;
+            border-color: var(--text-heading) !important;
+            background-color: var(--rndm-bx-lmnt) !important;
+            transform: scale(1.067) !important; 
         }
 
         .portfolio-footer {
             border-top: 1px solid rgba(0, 0, 0, 0.08);
-            padding: 100px 100px 60px 0;
+            padding: 100px 100px 200px 0;
             margin-top: 100px;
-            margin-left: 90px;   
+            margin-left: 90px;
             margin-right: 80px;
         }
 
@@ -380,9 +454,9 @@
             </div>
             
             <nav class="navbar-links-group">
+                <a href="{% url 'home' %}">Home</a>
                 <a href="{% url 'about' %}">About</a>
                 <a href="{% url 'works' %}">Works</a>
-                <a href="{% url 'testimony' %}">Testimonials</a>
                 <a href="#contact">Contact</a>
             </nav>
         </div>
@@ -420,34 +494,35 @@
                 <div class="col-lg-7 col-12 pe-lg-5 mb-5 mb-lg-0">
                     <h2 class="footer-callout">Let's work<br>together.</h2>
                     
-                    <form action="#" method="post" class="mt-5">
+                    <form action="{% url 'add_contact' %}" method="post" class="mt-5">
+                        {% csrf_token %}
                         <div class="footer-input-group">
-                            <input type="text" id="first_name" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <input type="text" name="first_name" id="first_name" class="footer-input-field" placeholder=" " required autocomplete="off">
                             <label for="first_name" class="footer-input-label">Given Name</label>
                         </div>
 
                         <div class="footer-input-group">
-                            <input type="text" id="last_name" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <input type="text" name="last_name" id="last_name" class="footer-input-field" placeholder=" " required autocomplete="off">
                             <label for="last_name" class="footer-input-label">Last Name</label>
                         </div>
                         
                         <div class="footer-input-group">
-                            <input type="text" id="contact_number" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <input type="text" name="contact_number" id="contact_number" class="footer-input-field" placeholder=" " required autocomplete="off">
                             <label for="contact_number" class="footer-input-label">Contact #</label>
                         </div>
 
                         <div class="footer-input-group">
-                            <input type="email" id="form_email" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <input type="email" name="email" id="form_email" class="footer-input-field" placeholder=" " required autocomplete="off">
                             <label for="form_email" class="footer-input-label">Email Address</label>
                         </div>
 
                         <div class="footer-input-group">
-                            <input type="text" id="address" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <input type="text" name="address" id="address" class="footer-input-field" placeholder=" " required autocomplete="off">
                             <label for="address" class="footer-input-label">Your Address</label>
                         </div>
 
                         <div class="footer-input-group">
-                            <input type="text" id="message" class="footer-input-field" placeholder=" " required autocomplete="off">
+                            <input type="text" name="message" id="message" class="footer-input-field" placeholder=" " required autocomplete="off">
                             <label for="message" class="footer-input-label">Message / Project Goal</label>
                         </div>
 

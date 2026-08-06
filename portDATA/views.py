@@ -50,9 +50,14 @@ def add_contact(request):
         form = contactDATAForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(request.META.get('HTTP_REFERER', 'home'))
+            print("--- CONTACT SAVED SUCCESSFULLY! ---")
+        else:
+            print("--- INVALID FORM ERRORS ---:", form.errors)
             
-    return redirect(request.META.get('HTTP_REFERER', 'home'))
+    next_url = request.META.get('HTTP_REFERER')
+    if next_url:
+        return redirect(next_url)
+    return redirect('home')
 
 class TestimonialDATAListView(ListView):
     model = TestimonialDATA
