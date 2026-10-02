@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Project | Prince Portfolio{% endblock %}
+{% block active_nav %}Dashboard{% endblock %}
+
+{% block content %}
+<main class="centered-content-wrapper" style="max-width: 700px; padding-top: 60px; padding-bottom: 80px;">
+    <div class="mb-4">
+        <a href="{% url 'dashboard' %}" class="text-decoration-none fw-bold text-muted small">← Back to Dashboard</a>
+        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px; text-transform: uppercase; margin-top: 10px; color: var(--text-heading);">
+            Edit Project: {{ project.project_name }}
+        </h2>
+    </div>
+
+    <div style="background: #ffffff; border-radius: 12px; padding: 36px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger py-2 px-3 mb-3 small">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label fw-bold text-uppercase small" style="letter-spacing: 1px;">Project Name *</label>
+                {{ form.project_name }}
+                {% if form.project_name.errors %}
+                    <div class="text-danger small mt-1">{{ form.project_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold text-uppercase small" style="letter-spacing: 1px;">Project Description *</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="text-danger small mt-1">{{ form.description.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold text-uppercase small" style="letter-spacing: 1px;">Project Link *</label>
+                {{ form.link }}
+                {% if form.link.errors %}
+                    <div class="text-danger small mt-1">{{ form.link.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold text-uppercase small d-block" style="letter-spacing: 1px;">Tech Stack (Select One) *</label>
+                
+                <div class="p-3 border rounded" style="background-color: var(--bg-main); max-height: 220px; overflow-y: auto;">
+                    {% for choice in form.tech_stack_selection %}
+                        <div class="form-check mb-2">
+                            {{ choice.tag }}
+                            <label class="form-check-label ms-2 fw-semibold" for="{{ choice.id_for_label }}">
+                                {{ choice.choice_label }}
+                            </label>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted small m-0">No tech stacks found. Please <a href="{% url 'create_techstack' %}">create one</a> first.</p>
+                    {% endfor %}
+                </div>
+                {% if form.tech_stack_selection.errors %}
+                    <div class="text-danger small mt-1">{{ form.tech_stack_selection.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100 py-2 fw-bold text-uppercase" style="letter-spacing: 1px;">
+                Update Project →
+            </button>
+        </form>
+    </div>
+</main>
+{% block footer %}
+{#blank pls#}
+{% endblock %}
+{% endblock %}

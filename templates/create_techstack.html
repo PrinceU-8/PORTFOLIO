@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Tech Stack | Prince Portfolio{% endblock %}
+{% block active_nav %}Dashboard{% endblock %}
+
+{% block content %}
+<main class="centered-content-wrapper" style="max-width: 600px; padding-top: 60px; padding-bottom: 80px;">
+    <div class="mb-4">
+        <a href="{% url 'dashboard' %}" class="text-decoration-none fw-bold text-muted small">← Back to Dashboard</a>
+        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px; text-transform: uppercase; margin-top: 10px;">
+            Add Tech Stack
+        </h2>
+    </div>
+
+    <div style="background: #ffffff; border-radius: 12px; padding: 36px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+                <div class="alert alert-danger py-2 px-3 mb-3 small">
+                    Please correct the errors below.
+                </div>
+            {% endif %}
+
+            <div class="mb-4">
+                <label class="form-label fw-bold text-uppercase small" style="letter-spacing: 1px;">Tech Stack Name *</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger small mt-1">{{ form.name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100 py-2 fw-bold text-uppercase" style="letter-spacing: 1px;">
+                Save Tech Stack →
+            </button>
+        </form>
+    </div>
+</main>
+{% block footer %}
+{#blank pls#}
+{% endblock %}
+{% endblock %}
