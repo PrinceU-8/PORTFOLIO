@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard | Prince Portfolio{% endblock %}
+
+{% block active_nav %}Dashboard{% endblock %}
+
+{% block content %}
+<main class="centered-content-wrapper" style="padding-top: 60px; padding-bottom: 80px;">
+    <!-- Top Action Bar -->
+    <div class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom">
+        <div>
+            <h1 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; text-transform: uppercase; margin: 0; color: var(--text-heading);">
+                Admin Dashboard
+            </h1>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin: 4px 0 0 0;">
+                Logged in as superuser: <strong>{{ request.user.username }}</strong>
+            </p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'create_project' %}" class="btn btn-dark fw-bold px-3 py-2" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                + Add Project
+            </a>
+            <a href="{% url 'add_otherproject' %}" class="btn btn-dark fw-bold px-3 py-2" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                + Add Other Project
+            </a>
+            <a href="{% url 'create_techstack' %}" class="btn btn-outline-dark fw-bold px-3 py-2" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                + Add Tech Stack
+            </a>
+            <a href="{% url 'logout' %}" class="btn btn-danger fw-bold px-3 py-2" style="font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                Sign Out
+            </a>
+        </div>
+    </div>
+
+    <!-- Section 1: Primary Projects Table -->
+    <section class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 style="font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; margin: 0;">
+                Primary Projects (Relational)
+            </h3>
+            <a href="{% url 'create_project' %}" class="btn btn-sm btn-dark fw-bold">+ New Project</a>
+        </div>
+
+        <div class="table-responsive shadow-sm" style="border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: #ffffff;">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">
+                        <th class="py-3 px-4">Project Name</th>
+                        <th class="py-3 px-4">Description</th>
+                        <th class="py-3 px-4">Tech Stack</th>
+                        <th class="py-3 px-4">Link</th>
+                        <th class="py-3 px-4 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                        <tr>
+                            <td class="py-3 px-4 fw-bold">{{ project.project_name }}</td>
+                            <td class="py-3 px-4 text-muted" style="max-width: 320px;">
+                                {{ project.description|truncatechars:50 }}
+                            </td>
+                            <td class="py-3 px-4">
+                                {% for stack in project.tech_stacks.all %}
+                                    <span class="badge bg-secondary me-1">{{ stack.name }}</span>
+                                {% empty %}
+                                    <span class="text-muted small">None</span>
+                                {% endfor %}
+                            </td>
+                            <td class="py-3 px-4">
+                                {% if project.link %}
+                                    <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="fw-bold" style="color: var(--mega-undrln); text-decoration: underline;">
+                                        Visit Link →
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted small">No link</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-3 px-4 text-end">
+                                <div class="d-inline-flex gap-2">
+                                    <a href="{% url 'edit_project' project.id %}" class="btn btn-sm btn-outline-dark fw-bold">
+                                        Edit
+                                    </a>
+                                    <form method="POST" action="{% url 'delete_project' project.id %}" onsubmit="return confirm('Are you sure you want to delete this project?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger fw-bold">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                No projects recorded yet.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Section 2: Other Projects Table -->
+    <section class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 style="font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; margin: 0;">
+                Other Projects & Explorations
+            </h3>
+            <a href="{% url 'add_otherproject' %}" class="btn btn-sm btn-dark fw-bold">+ New Other Project</a>
+        </div>
+
+        <div class="table-responsive shadow-sm" style="border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: #ffffff;">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">
+                        <th class="py-3 px-4">Project Name</th>
+                        <th class="py-3 px-4">Description</th>
+                        <th class="py-3 px-4">Tech Stack</th>
+                        <th class="py-3 px-4">Link</th>
+                        <th class="py-3 px-4 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for other in other_projects %}
+                        <tr>
+                            <td class="py-3 px-4 fw-bold">{{ other.project_name }}</td>
+                            <td class="py-3 px-4 text-muted" style="max-width: 320px;">
+                                {{ other.description|truncatechars:50 }}
+                            </td>
+                            <td class="py-3 px-4">
+                                {% if other.tech_stack %}
+                                    <span class="badge" style="background-color: var(--rndm-bx-lmnt); color: var(--text-heading); font-size: 0.8rem;">
+                                        {{ other.tech_stack }}
+                                    </span>
+                                {% else %}
+                                    <span class="text-muted small">None</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-3 px-4">
+                                {% if other.link %}
+                                    <a href="{{ other.link }}" target="_blank" rel="noopener noreferrer" class="fw-bold" style="color: var(--mega-undrln); text-decoration: underline;">
+                                        Visit Link →
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted small">No link</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-3 px-4 text-end">
+                                <div class="d-inline-flex gap-2">
+                                    <a href="{% url 'edit_otherproject' other.id %}" class="btn btn-sm btn-outline-dark fw-bold">
+                                        Edit
+                                    </a>
+                                    <form method="POST" action="{% url 'delete_otherproject' other.id %}" onsubmit="return confirm('Are you sure you want to delete this other project?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger fw-bold">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                No other projects recorded yet.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Section 3: Tech Stacks Table -->
+    <section>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 style="font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; margin: 0;">
+                Tech Stacks List
+            </h3>
+            <a href="{% url 'create_techstack' %}" class="btn btn-sm btn-dark fw-bold">+ New Tech Stack</a>
+        </div>
+
+        <div class="table-responsive shadow-sm" style="border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); background: #ffffff;">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">
+                        <th class="py-3 px-4">Tech Stack Name</th>
+                        <th class="py-3 px-4">Project It Was Used</th>
+                        <th class="py-3 px-4">Date Added</th>
+                        <th class="py-3 px-4 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stack in tech_stacks %}
+                        <tr>
+                            <td class="py-3 px-4 fw-bold">
+                                <span class="badge" style="background-color: var(--rndm-bx-lmnt); color: var(--text-heading); font-size: 0.85rem;">
+                                    {{ stack.name }}
+                                </span>
+                            </td>
+                            <td class="py-3 px-4">
+                                {% for proj in stack.projects.all %}
+                                    <span class="fw-semibold text-dark">{{ proj.project_name }}</span>{% if not forloop.last %}, {% endif %}
+                                {% empty %}
+                                    <span class="text-muted small">Not used in any project yet</span>
+                                {% endfor %}
+                            </td>
+                            <td class="py-3 px-4 text-muted small">
+                                {{ stack.created_at|date:"M d, Y h:i A" }}
+                            </td>
+                            <td class="py-3 px-4 text-end">
+                                <div class="d-inline-flex gap-2">
+                                    <a href="{% url 'edit_techstack' stack.id %}" class="btn btn-sm btn-outline-dark fw-bold">
+                                        Edit
+                                    </a>
+                                    <form method="POST" action="{% url 'delete_techstack' stack.id %}" onsubmit="return confirm('Are you sure you want to delete this tech stack?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger fw-bold">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">
+                                No tech stacks recorded yet.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+
+{% block footer %}
+{#blank pls#}
+{% endblock %}
+{% endblock %}

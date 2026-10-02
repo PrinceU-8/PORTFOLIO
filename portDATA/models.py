@@ -1,10 +1,18 @@
 from django.db import models
 
+class TechStack(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
 class ProjDATA(models.Model):
-    project_name = models.CharField(max_length=100)
+    project_name = models.CharField(max_length=200)
     description = models.TextField()
-    tech_stack = models.CharField(max_length=367)
-    link = models.URLField(max_length=400, blank=True, null=True)
+    tech_stacks = models.ManyToManyField(TechStack, related_name='projects')
+    link = models.URLField(max_length=500, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.project_name
