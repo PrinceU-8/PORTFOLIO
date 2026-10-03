@@ -8,16 +8,20 @@
         <div class="col-12 position-relative">
             <div class="hero-canvas">
                 <div class="hero-action-deck">
-                    <a href="{% url 'about' %}" class="btn-minimal-deck">About Me</a>
-                    <a href="{% url 'works' %}" class="btn-minimal-deck">View Works</a>
-                    <a href="{% url 'testimony' %}" class="btn-minimal-deck">Testimony</a>
-                    <a href="#contact" class="btn-minimal-deck">Let's Collaborate!</a>
+                    <a href="{% url 'about' %}" class="btn-minimal-deck secret-node" data-trigger="ABOUT ME">About Me</a>
+                    <a href="{% url 'works' %}" class="btn-minimal-deck secret-node" data-trigger="VIEW WORKS">View Works</a>
+                    <a href="{% url 'testimony' %}" class="btn-minimal-deck secret-node" data-trigger="TESTIMONY">Testimony</a>
+                    <a href="#contact" class="btn-minimal-deck secret-node" data-trigger="LETS COLLABORATE">Let's Collaborate!</a>
                 </div>
 
                 <div class="reveal-window">
                     <div class="anchor-box"></div>
                     <div class="sliding-name-container">
-                        <h1>Prince<br>Emmanuel<br>Ubando</h1>
+                        <h1>
+                            <span class="d-inline-block secret-node" data-trigger="PRINCE" style="cursor: pointer; user-select: none;">Prince</span><br>
+                            <span class="d-inline-block secret-node" data-trigger="EMMANUEL" style="cursor: pointer; user-select: none;">Emmanuel</span><br>
+                            <span class="d-inline-block secret-node" data-trigger="UBANDO" style="cursor: pointer; user-select: none;">Ubando</span>
+                        </h1>
                     </div>
                 </div>
 
@@ -35,4 +39,255 @@
         </div>
     </div>
 </main>
+
+<!-- Arcaea-styled Point of No Return Modal Overlay -->
+<div id="no-return-overlay" class="no-return-backdrop">
+    <div class="no-return-modal">
+        <!-- Top Caution Stripe Header -->
+        <div class="hazard-stripe-header">
+            <span class="hazard-title">Warning</span>
+        </div>
+
+        <!-- Body Text -->
+        <div class="no-return-body">
+            <p class="no-return-line1">Authorized Personnel Only.</p>
+            <p class="no-return-line2">Proceeding without proper clearance is prohibited.</p>
+        </div>
+
+        <!-- Action Section with Horizontal Rule -->
+        <div class="no-return-actions">
+            <div class="action-divider-line"></div>
+            
+            <!-- Red Hexagonal Continue Button -->
+            <button type="button" id="btn-modal-continue" class="hex-btn continue-btn">
+                <span>Continue</span>
+            </button>
+
+            <!-- Dark Hexagonal Cancel Button -->
+            <button type="button" id="btn-modal-cancel" class="hex-btn cancel-btn">
+                <span>Cancel</span>
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<style>
+/* Modal Backdrop Overlay */
+.no-return-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 7, 12, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+}
+
+/* Modal Frame */
+.no-return-modal {
+    position: relative;
+    width: 90%;
+    max-width: 540px;
+    background: radial-gradient(circle at 50% 30%, #15161b 0%, #0c0d11 100%);
+    border: 1px solid rgba(80, 85, 95, 0.45);
+    border-radius: 14px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 30, 60, 0.12);
+    overflow: hidden;
+    color: #e4e7eb;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding-bottom: 28px;
+    animation: modalPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalPopIn {
+    0% { transform: scale(0.92); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Hazard Tape Header */
+.hazard-stripe-header {
+    width: 100%;
+    height: 48px;
+    background: repeating-linear-gradient(
+        -45deg,
+        #44090e,
+        #44090e 10px,
+        #a61421 10px,
+        #a61421 20px
+    );
+    border-bottom: 1px solid rgba(255, 60, 80, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hazard-title {
+    background: #0e0f14;
+    padding: 2px 28px;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 50, 70, 0.4);
+    box-shadow: 0 0 12px rgba(255, 0, 40, 0.35);
+}
+
+/* Body Text */
+.no-return-body {
+    padding: 34px 28px 24px;
+    text-align: center;
+}
+
+.no-return-line1 {
+    font-size: 1.05rem;
+    color: #ccd2db;
+    margin-bottom: 6px;
+    letter-spacing: 0.2px;
+}
+
+.no-return-line2 {
+    font-size: 0.95rem;
+    color: #8c93a0;
+    margin: 0;
+    letter-spacing: 0.1px;
+}
+
+/* Actions Area */
+.no-return-actions {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding-top: 15px;
+}
+
+/* Subtle glowing accent line running behind Continue */
+.action-divider-line {
+    position: absolute;
+    top: 38px;
+    left: 5%;
+    right: 5%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200, 30, 50, 0.5), transparent);
+    z-index: 1;
+}
+
+/* Base Beveled Hexagon Button */
+.hex-btn {
+    position: relative;
+    z-index: 2;
+    width: 250px;
+    height: 46px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 0.98rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%);
+}
+
+/* Continue (Red Accent) */
+.continue-btn {
+    background: radial-gradient(circle, #25070a 0%, #150406 100%);
+    color: #ff3b53;
+    border: 1px solid #7d121c;
+    box-shadow: inset 0 0 10px rgba(255, 30, 60, 0.25), 0 0 16px rgba(180, 20, 40, 0.4);
+}
+
+.continue-btn:hover {
+    background: radial-gradient(circle, #350c11 0%, #1f0609 100%);
+    color: #ff6b7e;
+    box-shadow: inset 0 0 14px rgba(255, 50, 80, 0.4), 0 0 24px rgba(230, 30, 60, 0.65);
+    transform: scale(1.02);
+}
+
+/* Cancel (Dark Gray/Black) */
+.cancel-btn {
+    background: linear-gradient(180deg, #1b1d24 0%, #121318 100%);
+    color: #9299a6;
+    border: 1px solid #323642;
+}
+
+.cancel-btn:hover {
+    background: linear-gradient(180deg, #252832 0%, #181a20 100%);
+    color: #d1d6e0;
+    border-color: #4b5162;
+    transform: scale(1.02);
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // 7-step sequence:
+    // 1. Ubando -> 2. Prince -> 3. Emmanuel -> 4. About Me -> 5. Let's Collaborate! -> 6. Testimony -> 7. View Works
+    const SECRET_COMBO = [
+        "UBANDO",
+        "PRINCE",
+        "EMMANUEL",
+        "ABOUT ME",
+        "LETS COLLABORATE",
+        "TESTIMONY",
+        "VIEW WORKS"
+    ];
+
+    let currentProgress = 0;
+    let resetTimer = null;
+
+    const overlay = document.getElementById("no-return-overlay");
+    const continueBtn = document.getElementById("btn-modal-continue");
+    const cancelBtn = document.getElementById("btn-modal-cancel");
+
+    // Sequence click detection
+    document.querySelectorAll(".secret-node").forEach(node => {
+        node.addEventListener("click", (e) => {
+            const trigger = node.getAttribute("data-trigger");
+
+            if (trigger === SECRET_COMBO[currentProgress]) {
+                // If it's a navigational link step, stop navigation
+                if (currentProgress >= 3) {
+                    e.preventDefault();
+                }
+
+                currentProgress++;
+
+                // Reset after 5 seconds of inactivity
+                clearTimeout(resetTimer);
+                resetTimer = setTimeout(() => {
+                    currentProgress = 0;
+                }, 5000);
+
+                // Sequence completed: open warning modal
+                if (currentProgress === SECRET_COMBO.length) {
+                    e.preventDefault();
+                    currentProgress = 0;
+                    overlay.style.display = "flex";
+                }
+            } else {
+                currentProgress = (trigger === SECRET_COMBO[0]) ? 1 : 0;
+            }
+        });
+    });
+
+    // Continue -> Proceed to Login / Dashboard
+    continueBtn.addEventListener("click", () => {
+        window.location.href = "{% url 'dashboard' %}";
+    });
+
+    // Cancel -> Close modal quietly
+    cancelBtn.addEventListener("click", () => {
+        overlay.style.display = "none";
+    });
+});
+</script>
 {% endblock %}
