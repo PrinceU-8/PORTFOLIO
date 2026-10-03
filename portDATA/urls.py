@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     # Static & Base Pages
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('contact/', TemplateView.as_view(template_name='home.html'), name='contact'),
+    path('contact/', views.contact_page, name='contact'),
     path('about/', views.about, name='about'),
 
     # Projects
@@ -35,5 +35,6 @@ urlpatterns = [
     path('dashboard/project/<int:project_id>/delete/', views.delete_project, name='delete_project'),
     path('dashboard/techstack/<int:stack_id>/delete/', views.delete_techstack, name='delete_techstack'),
     path('dashboard/otherproject/<int:other_id>/delete/', views.delete_otherproject, name='delete_otherproject'),
-    
+    path('dashboard/contact/<int:contact_id>/delete/', views.delete_contact, name='delete_contact'),
+    path('dashboard/testimony/<int:testimonial_id>/delete/', views.delete_testimony, name='delete_testimony'),
 ]
